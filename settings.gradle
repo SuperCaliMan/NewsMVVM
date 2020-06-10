@@ -1,0 +1,4 @@
+include ':network'
+rootProject.name='mvvm'
+include ':app'
+include ':network'
