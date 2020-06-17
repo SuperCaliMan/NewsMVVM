@@ -62,7 +62,6 @@ class NewsViewModel:ViewModel(), KoinComponent{
                 news
             }
         }
-
          */
 
         }
