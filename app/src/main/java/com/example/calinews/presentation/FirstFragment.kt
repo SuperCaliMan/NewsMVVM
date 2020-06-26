@@ -1,4 +1,4 @@
-package com.example.calinews
+package com.example.calinews.presentation
 
 import android.os.Bundle
 import android.util.Log
@@ -10,15 +10,14 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calinews.R
-import com.example.calinews.model.NewsArticle
-import com.example.calinews.viewmodel.NewsViewModel
+import com.example.calinews.presentation.viewmodel.NewsViewModel
 import kotlinx.android.synthetic.main.fragment_first.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class FirstFragment : Fragment() {
     private val viewModel: NewsViewModel by viewModel()
-    private lateinit var mAdapter:NewsAdapter
+    private lateinit var mAdapter: NewsAdapter
     private val TAG = FirstFragment::class.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +42,7 @@ class FirstFragment : Fragment() {
         listViewNews.adapter = mAdapter
         
         //observer
-        viewModel.getNewsRepository().observe(viewLifecycleOwner, Observer { mAdapter.data = it.articles!!})
+        viewModel.getNewsUseCase().observe(viewLifecycleOwner, Observer { mAdapter.data = it.articles!!})
 
         viewModel.verificationError.observe(viewLifecycleOwner, Observer { errorMessage ->
            Toast.makeText(context,errorMessage,Toast.LENGTH_LONG).show()

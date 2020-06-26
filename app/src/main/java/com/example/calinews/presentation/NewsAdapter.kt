@@ -1,4 +1,4 @@
-package com.example.calinews
+package com.example.calinews.presentation
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.calinews.model.NewsArticle
+import com.example.calinews.R
+import com.example.calinews.domain.model.NewsArticle
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 
@@ -23,7 +24,10 @@ class NewsAdapter():RecyclerView.Adapter<NewsAdapter.NewsArticleViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsArticleViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         context = parent.context;
-        return NewsArticleViewHolder(inflater,parent)
+        return NewsArticleViewHolder(
+            inflater,
+            parent
+        )
     }
 
     override fun getItemCount(): Int {
@@ -48,7 +52,7 @@ class NewsAdapter():RecyclerView.Adapter<NewsAdapter.NewsArticleViewHolder>(){
             val builder = Picasso.Builder(context)
             builder.downloader(OkHttp3Downloader(context))
             builder.build().load(article.urlToImage)
-                .placeholder(R.drawable.ic_launcher_background)
+               // .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
                 .into(imgView)
         }

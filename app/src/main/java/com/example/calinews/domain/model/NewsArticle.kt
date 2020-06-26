@@ -1,4 +1,4 @@
-package com.example.calinews.model
+package com.example.calinews.domain.model
 
 import com.google.gson.annotations.SerializedName
 

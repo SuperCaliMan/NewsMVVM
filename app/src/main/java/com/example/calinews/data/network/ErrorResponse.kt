@@ -1,4 +1,4 @@
-package com.example.calinews.network
+package com.example.calinews.data.network
 
 import com.google.gson.annotations.SerializedName
 

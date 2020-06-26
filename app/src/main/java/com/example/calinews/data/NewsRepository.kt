@@ -1,8 +1,8 @@
-package com.example.calinews.repository
+package com.example.calinews.data
 
-import com.example.calinews.model.NewsResult
-import com.example.calinews.network.NewsApi
-import com.example.calinews.network.NewsSafeApi
+import com.example.calinews.domain.model.NewsResult
+import com.example.calinews.data.network.NewsApi
+import com.example.calinews.data.network.NewsSafeApi
 import com.supercaliman.network.api.NetworkError
 import com.supercaliman.network.api.NetworkResource
 import org.koin.core.KoinComponent
@@ -13,12 +13,13 @@ import org.koin.core.inject
  * @author Alberto Caliman 24/05/2020
  *Repository
  */
-class NewsRepository: KoinComponent {
+class NewsRepository(): KoinComponent {
     private val newsApi:NewsApi by inject()
 
 
+
     //get data from newtworkAPI
-    suspend fun getNews(source:String,key:String) :NewsResult {
+   suspend fun getNews(source:String,key:String) :NewsResult {
        // return newsApi.getNewsList(source,key)
        val res = NewsSafeApi {
             newsApi.getNewsList(source, key)

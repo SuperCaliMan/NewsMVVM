@@ -1,11 +1,12 @@
-package com.example.calinews.viewmodel
+package com.example.calinews.presentation.viewmodel
 
 
+import SingleLiveEvent
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.calinews.model.NewsResponse
-import com.example.calinews.model.NewsResult
-import com.example.calinews.repository.NewsRepository
+import com.example.calinews.domain.model.NewsResponse
+import com.example.calinews.domain.model.NewsResult
+import com.example.calinews.domain.getNewsTaskUseCase
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -13,13 +14,12 @@ import org.koin.core.inject
 
 class NewsViewModel:ViewModel(), KoinComponent{
     private val TAG:String = NewsViewModel::class.java.simpleName
-    val newsRepository:NewsRepository by inject()
-    private var _verificationError = MutableLiveData<String>()
-
+    private var _verificationError = SingleLiveEvent<String>()
+    private val getNewsUseCase:getNewsTaskUseCase by inject()
     private var newsLiveData: LiveData<NewsResponse> = liveData(Dispatchers.IO) {
-            val getData = newsRepository.getNews("google-news","ba2cd6f3c03c40879416611969d88a9f")
+            val getData = getNewsUseCase.execute()
             when(getData){
-                    is NewsResult.Success -> emit(getData.response)
+                    is NewsResult.Success -> emit(getData.response) //eventuale mapper
                     is NewsResult.ConnectionError -> {
                         Log.d(TAG,"connection error")
                         _verificationError.postValue("connection error")
@@ -39,7 +39,7 @@ class NewsViewModel:ViewModel(), KoinComponent{
     var verificationError: LiveData<String> = _verificationError
 
 
-    fun getNewsRepository(): LiveData<NewsResponse> {
+    fun getNewsUseCase(): LiveData<NewsResponse> {
         return newsLiveData
         //Data manipulation example
         /*Mapper class from vievModel to presentation layer
