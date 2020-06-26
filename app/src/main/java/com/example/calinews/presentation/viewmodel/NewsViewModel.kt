@@ -4,9 +4,9 @@ package com.example.calinews.presentation.viewmodel
 import SingleLiveEvent
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.calinews.domain.model.NewsResponse
-import com.example.calinews.domain.model.NewsResult
-import com.example.calinews.domain.getNewsTaskUseCase
+import com.supercaliman.domain.getNewsTaskUseCase
+import com.supercaliman.domain.model.NewsResponse
+import com.supercaliman.domain.model.NewsResult
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -15,7 +15,7 @@ import org.koin.core.inject
 class NewsViewModel:ViewModel(), KoinComponent{
     private val TAG:String = NewsViewModel::class.java.simpleName
     private var _verificationError = SingleLiveEvent<String>()
-    private val getNewsUseCase:getNewsTaskUseCase by inject()
+    private val getNewsUseCase: getNewsTaskUseCase by inject()
     private var newsLiveData: LiveData<NewsResponse> = liveData(Dispatchers.IO) {
             val getData = getNewsUseCase.execute()
             when(getData){

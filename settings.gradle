@@ -1,3 +1,5 @@
+include ':domain'
+include ':data'
 include ':network'
 rootProject.name='mvvm'
 include ':app'

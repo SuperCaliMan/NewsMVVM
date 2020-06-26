@@ -1,6 +1,6 @@
-package com.example.calinews.domain
+package com.supercaliman.domain
 
-import com.example.calinews.domain.model.NewsResult
+import com.supercaliman.domain.model.NewsResult
 
 interface Repository {
 

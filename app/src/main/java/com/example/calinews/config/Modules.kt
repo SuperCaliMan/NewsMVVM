@@ -1,24 +1,26 @@
 package com.example.calinews.config
 
-import com.example.calinews.data.network.NewsApi
-import com.example.calinews.data.NewsRepositoryImpl
-import com.example.calinews.domain.Repository
-import com.example.calinews.domain.getNewsTaskUseCase
+
+import com.supercaliman.data.network.NewsApi
 import com.example.calinews.presentation.viewmodel.NewsViewModel
+import com.supercaliman.data.ConfigurationNetwork
 import com.supercaliman.network.Network
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    single<Repository> {
-        return@single NewsRepositoryImpl()
+    single<com.supercaliman.domain.Repository> {
+        return@single com.supercaliman.data.NewsRepositoryImpl()
     }
-    factory { getNewsTaskUseCase() }
+    factory { com.supercaliman.domain.getNewsTaskUseCase() }
     viewModel { NewsViewModel() }
 
     single {
-        val network = Network(androidContext(),ConfigurationNetwork())
+        val network = Network(
+            androidContext(),
+            ConfigurationNetwork()
+        )
         network.createServiceAPI(NewsApi::class)
     }
 }

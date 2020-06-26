@@ -7,9 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.calinews.R
-import com.example.calinews.domain.model.NewsArticle
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
+import com.supercaliman.domain.model.NewsArticle
 
 class NewsAdapter():RecyclerView.Adapter<NewsAdapter.NewsArticleViewHolder>(){
     lateinit var context:Context

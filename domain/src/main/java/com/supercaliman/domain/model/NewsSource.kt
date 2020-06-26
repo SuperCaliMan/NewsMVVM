@@ -1,4 +1,4 @@
-package com.example.calinews.domain.model
+package com.supercaliman.domain.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

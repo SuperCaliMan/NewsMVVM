@@ -43,11 +43,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //network
-    implementation "com.google.code.gson:gson:$gson_version"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$convertergson_version"
-    implementation project(':network')
+
 
     //img lib
     implementation "com.squareup.picasso:picasso:$picasso_version"
@@ -68,6 +64,12 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
+
+
+    implementation project(':domain')
+    implementation project(':data')
+    implementation project(':network')
+
 
 
 }

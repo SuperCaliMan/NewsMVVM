@@ -1,7 +1,6 @@
-package com.example.calinews.domain
+package com.supercaliman.domain
 
-import com.example.calinews.data.NewsRepositoryImpl
-import com.example.calinews.domain.model.NewsResult
+import com.supercaliman.domain.model.NewsResult
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
