@@ -1,6 +1,6 @@
 package com.example.calinews.domain
 
-import com.example.calinews.data.NewsRepository
+import com.example.calinews.data.NewsRepositoryImpl
 import com.example.calinews.domain.model.NewsResult
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -9,7 +9,7 @@ import org.koin.core.inject
  * Rappresenta le operationi che posso eseguire sul mio oggetto newsResult, va fatta una classe per ogni operazione CRUD
  */
 class getNewsTaskUseCase(): KoinComponent {
-    val newsRepository: NewsRepository by inject()
+    val newsRepository: Repository by inject()
 
 
    suspend fun execute(): NewsResult {
