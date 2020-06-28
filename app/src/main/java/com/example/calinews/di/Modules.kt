@@ -1,4 +1,4 @@
-package com.example.calinews.config
+package com.example.calinews.di
 
 
 import com.supercaliman.data.network.NewsApi

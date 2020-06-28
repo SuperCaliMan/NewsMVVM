@@ -13,7 +13,7 @@ import org.koin.core.inject
 
 /**
  * @author Alberto Caliman 24/05/2020
- *Repository
+ * Repository definition
  */
 class NewsRepositoryImpl(): KoinComponent, Repository {
     private val newsApi:NewsApi by inject()

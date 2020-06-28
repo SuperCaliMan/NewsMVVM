@@ -44,10 +44,13 @@ class FirstFragment : Fragment() {
         //observer
         viewModel.getNewsUseCase().observe(viewLifecycleOwner, Observer { mAdapter.data = it.articles!!})
 
-        viewModel.verificationError.observe(viewLifecycleOwner, Observer { errorMessage ->
-           Toast.makeText(context,errorMessage,Toast.LENGTH_LONG).show()
-        })
+        viewModel.verificationError.observe(viewLifecycleOwner, Observer {renderErrorUI(it)})
 
         floatingActionButton.setOnClickListener { Log.d(TAG,"click") }
+    }
+
+
+    fun renderErrorUI(errorMessage:String){
+        Toast.makeText(context,errorMessage,Toast.LENGTH_LONG).show()
     }
 }
