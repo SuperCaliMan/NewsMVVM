@@ -1,11 +1,11 @@
 package com.supercaliman.network.api
 
-import android.util.Log
 import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException
 
 /**
+ * Alberto Caliman
  * This method wrap a Retrofit [Response] and handles all types of errors.
  * Without this wrapper you should use try/catch every api call to avoid unexpected crashes (no internet connection, timeout, ecc...)
  * @param call a suspend Retrofit call that return a [Response]
@@ -25,7 +25,7 @@ suspend inline fun <T,reified E> SafeApiCall(call: () -> Response<T>) : NetworkR
                 response,
                 NetworkError.HttpError(
                     response.code(),
-                    null
+                   data = null
                 )
             )
         }
