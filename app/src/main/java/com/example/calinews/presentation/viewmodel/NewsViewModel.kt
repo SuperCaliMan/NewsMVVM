@@ -6,34 +6,37 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.supercaliman.domain.getNewsTaskUseCase
 import com.supercaliman.domain.model.NewsResponse
-import com.supercaliman.domain.model.NewsResult
+import com.supercaliman.domain.model.Result
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 
+@Suppress("UNCHECKED_CAST")
 class NewsViewModel:ViewModel(), KoinComponent{
     private val TAG:String = NewsViewModel::class.java.simpleName
     private var _verificationError = SingleLiveEvent<String>()
     private val getNewsUseCase: getNewsTaskUseCase by inject()
-    private var newsLiveData: LiveData<NewsResponse> = liveData(Dispatchers.IO) {
+    private var newsLiveData: MutableLiveData<NewsResponse> = liveData(Dispatchers.IO) {
             val getData = getNewsUseCase.execute()
             when(getData){
-                    is NewsResult.Success -> emit(getData.response) //eventuale mapper
-                    is NewsResult.ConnectionError -> {
+                    is Result.Success -> emit(getData.response) //eventuale mapper
+                    is Result.ConnectionError -> {
                         Log.d(TAG,"connection error")
                         _verificationError.postValue("connection error")
                     }
-                    is NewsResult.ServerError -> {
+                    is Result.ServerError -> {
                         Log.d(TAG,"server error")
                         _verificationError.postValue("server error")
                     }
-                    is NewsResult.Unauthorized -> {
+                    is Result.Unauthorized -> {
                         Log.d(TAG, "unauthorized")
                         _verificationError.postValue( "unauthorized")
                     }
                 }
-            }
+            } as MutableLiveData<NewsResponse>
 
 
     var verificationError: LiveData<String> = _verificationError
@@ -65,6 +68,27 @@ class NewsViewModel:ViewModel(), KoinComponent{
          */
 
         }
+
+    fun update(){
+        CoroutineScope(Dispatchers.Main).launch {
+            val getData = getNewsUseCase.execute()
+            when(getData){
+                is com.supercaliman.domain.model.Result.Success -> newsLiveData.postValue(getData.response) //eventuale mapper
+                is com.supercaliman.domain.model.Result.ConnectionError -> {
+                    Log.d(TAG,"connection error")
+                    _verificationError.postValue("connection error")
+                }
+                is com.supercaliman.domain.model.Result.ServerError -> {
+                    Log.d(TAG,"server error")
+                    _verificationError.postValue("server error")
+                }
+                is com.supercaliman.domain.model.Result.Unauthorized -> {
+                    Log.d(TAG, "unauthorized")
+                    _verificationError.postValue( "unauthorized")
+                }
+            }
+        }
+    }
 }
 
 

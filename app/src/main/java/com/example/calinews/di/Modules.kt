@@ -18,7 +18,6 @@ val appModule = module {
 
     single {
         val network = Network(
-            androidContext(),
             ConfigurationNetwork()
         )
         network.createServiceAPI(NewsApi::class)
