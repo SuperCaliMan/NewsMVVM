@@ -2,8 +2,13 @@ package com.example.calinews.presentation.viewmodel
 
 
 import SingleLiveEvent
+import android.content.Context
+import android.content.res.Configuration
 import android.util.Log
 import androidx.lifecycle.*
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.supercaliman.domain.getNewsTaskUseCase
 import com.supercaliman.domain.model.NewsResponse
 import com.supercaliman.domain.model.Result
@@ -13,7 +18,9 @@ import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-
+/**
+ * ViewModel to show a list of news, in landscapeMode list become a grid
+ */
 @Suppress("UNCHECKED_CAST")
 class NewsViewModel:ViewModel(), KoinComponent{
     private val TAG:String = NewsViewModel::class.java.simpleName
@@ -88,6 +95,14 @@ class NewsViewModel:ViewModel(), KoinComponent{
                     _verificationError.postValue( "unauthorized")
                 }
             }
+        }
+    }
+
+    fun getLayoutManagerByOrientation(context: Context):RecyclerView.LayoutManager{
+        if(context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            return LinearLayoutManager(context)
+        }else{
+            return GridLayoutManager(context,2)
         }
     }
 }

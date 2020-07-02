@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calinews.R
 import com.example.calinews.presentation.viewmodel.NewsViewModel
@@ -40,22 +41,19 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        val mlayoutManager = LinearLayoutManager(view.context)
-        listViewNews.layoutManager = mlayoutManager
-        mAdapter = NewsAdapter()
-        listViewNews.adapter = mAdapter
         
         //observer
         viewModel.getNewsUseCase().observe(viewLifecycleOwner, Observer { renderUi(it)})
 
         viewModel.verificationError.observe(viewLifecycleOwner, Observer {renderErrorUI(view,it)})
 
-        floatingActionButton.setOnClickListener {  viewModel.update()}
+        floatingActionButton.setOnClickListener {viewModel.update()}
     }
 
     fun renderUi(response: NewsResponse){
+        listViewNews.layoutManager = viewModel.getLayoutManagerByOrientation(requireContext())
+        mAdapter = NewsAdapter()
+        listViewNews.adapter = mAdapter
         snackbar?.dismiss()
         mAdapter.data = response.articles!!
 
@@ -64,7 +62,6 @@ class FirstFragment : Fragment() {
     fun renderErrorUI(view: View,errorMessage:String){
         snackbar = Snackbar.make(view,errorMessage,Snackbar.LENGTH_INDEFINITE)
                 .setTextColor(Color.WHITE).setBackgroundTint(Color.RED)
-
         snackbar!!.show()
 
     }
