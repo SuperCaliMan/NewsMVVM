@@ -79,7 +79,7 @@ class NewsViewModel:ViewModel(), KoinComponent{
         }
 
     fun update(){
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             val getData = getNewsUseCase.execute()
             when(getData){
                 is Result.Success -> newsLiveData.postValue(getData.response) //eventuale mapper

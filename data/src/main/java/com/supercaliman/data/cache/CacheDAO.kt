@@ -1,18 +1,19 @@
 package com.supercaliman.data.cache
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
+import io.reactivex.Single
 
 @Dao
 interface CacheDAO {
-    @Query("SELECT * FROM newsresponseentity")
-    fun getAll():NewsResponseEntity
+    @Query("SELECT * FROM newsarticleentity")
+    fun getCacheArticles():List<NewsArticleEntity>
 
-    @Insert
-    fun addAll(responseDao: NewsResponseEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE )
+    fun add(articleDao: NewsArticleEntity)
 
     @Delete
-    fun delete(responseDao: NewsResponseEntity)
+    fun delete(articleDao: NewsArticleEntity)
+
+    @Query("SELECT COUNT(*) FROM newsarticleentity")
+    fun isEmpty():Int
 }
