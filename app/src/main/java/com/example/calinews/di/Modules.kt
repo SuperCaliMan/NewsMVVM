@@ -11,7 +11,7 @@ import org.koin.dsl.module
 
 val appModule = module {
     single<com.supercaliman.domain.Repository> {
-        return@single com.supercaliman.data.NewsRepositoryImpl()
+        return@single com.supercaliman.data.NewsRepositoryImpl(androidContext())
     }
     factory { com.supercaliman.domain.getNewsTaskUseCase() }
     viewModel { NewsViewModel() }

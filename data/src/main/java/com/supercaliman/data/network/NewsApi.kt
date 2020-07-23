@@ -8,6 +8,6 @@ import retrofit2.http.Query
 interface NewsApi{
 
     @GET("top-headlines/")
-    suspend fun getNewsList(@Query("sources") newsSource:String, @Query("apiKey") apiKey:String):Response<com.supercaliman.domain.model.NewsResponse>
+    suspend fun getNewsList(@Query("sources") newsSource:String, @Query("apiKey") apiKey:String):Response<NewsResponse>
 
 }

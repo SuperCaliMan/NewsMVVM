@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.supercaliman.domain.getNewsTaskUseCase
+import com.supercaliman.domain.model.NewsArticle
 import com.supercaliman.domain.model.NewsResponse
 import com.supercaliman.domain.model.Result
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +27,7 @@ class NewsViewModel:ViewModel(), KoinComponent{
     private val TAG:String = NewsViewModel::class.java.simpleName
     private var _verificationError = SingleLiveEvent<String>()
     private val getNewsUseCase: getNewsTaskUseCase by inject()
-    private var newsLiveData: MutableLiveData<NewsResponse> = liveData(Dispatchers.IO) {
+    private var newsLiveData: MutableLiveData<List<NewsArticle>> = liveData(Dispatchers.IO) {
             val getData = getNewsUseCase.execute()
             when(getData){
                     is Result.Success -> emit(getData.response) //eventuale mapper
@@ -43,14 +44,14 @@ class NewsViewModel:ViewModel(), KoinComponent{
                         _verificationError.postValue( "unauthorized")
                     }
                 }
-            } as MutableLiveData<NewsResponse>
+            } as MutableLiveData<List<NewsArticle>>
 
 
 
     var verificationError: LiveData<String> = _verificationError
 
 
-    fun getNewsUseCase(): LiveData<NewsResponse> {
+    fun getNewsUseCase(): LiveData<List<NewsArticle>> {
         return newsLiveData
         //Data manipulation example
         /*Mapper class from vievModel to presentation layer

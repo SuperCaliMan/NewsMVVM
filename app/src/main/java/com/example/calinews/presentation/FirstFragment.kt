@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calinews.R
 import com.example.calinews.presentation.viewmodel.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.supercaliman.domain.model.NewsArticle
 import com.supercaliman.domain.model.NewsResponse
 import kotlinx.android.synthetic.main.fragment_first.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -41,7 +42,7 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         //observer
         viewModel.getNewsUseCase().observe(viewLifecycleOwner, Observer { renderUi(it)})
 
@@ -50,12 +51,12 @@ class FirstFragment : Fragment() {
         floatingActionButton.setOnClickListener {viewModel.update()}
     }
 
-    fun renderUi(response: NewsResponse){
+    fun renderUi(response: List<NewsArticle>){
         listViewNews.layoutManager = viewModel.getLayoutManagerByOrientation(requireContext())
         mAdapter = NewsAdapter()
         listViewNews.adapter = mAdapter
         snackbar?.dismiss()
-        mAdapter.data = response.articles!!
+        mAdapter.data = response
 
     }
 
