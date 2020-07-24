@@ -11,47 +11,43 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.supercaliman.domain.getNewsTaskUseCase
 import com.supercaliman.domain.model.NewsArticle
-import com.supercaliman.domain.model.NewsResponse
 import com.supercaliman.domain.model.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 /**
  * ViewModel to show a list of news, in landscapeMode list become a grid
  */
 @Suppress("UNCHECKED_CAST")
-class NewsViewModel:ViewModel(), KoinComponent{
+class NewsViewModel(var getNewsUseCase: getNewsTaskUseCase):ViewModel(){
     private val TAG:String = NewsViewModel::class.java.simpleName
-    private var _verificationError = SingleLiveEvent<String>()
-    private val getNewsUseCase: getNewsTaskUseCase by inject()
+    private var _errorMutableData = SingleLiveEvent<String>()
     private var newsLiveData: MutableLiveData<List<NewsArticle>> = liveData(Dispatchers.IO) {
             val getData = getNewsUseCase.execute()
             when(getData){
                     is Result.Success -> emit(getData.response) //eventuale mapper
                     is Result.ConnectionError -> {
                         Log.d(TAG,"connection error")
-                        _verificationError.postValue("connection error")
+                        _errorMutableData.postValue("connection error")
                     }
                     is Result.ServerError -> {
                         Log.d(TAG,"server error")
-                        _verificationError.postValue("server error")
+                        _errorMutableData.postValue("server error")
                     }
                     is Result.Unauthorized -> {
                         Log.d(TAG, "unauthorized")
-                        _verificationError.postValue( "unauthorized")
+                        _errorMutableData.postValue( "unauthorized")
                     }
                 }
             } as MutableLiveData<List<NewsArticle>>
 
 
 
-    var verificationError: LiveData<String> = _verificationError
+    var errorLiveData: LiveData<String> = _errorMutableData
 
 
-    fun getNewsUseCase(): LiveData<List<NewsArticle>> {
+    fun getUiData(): LiveData<List<NewsArticle>> {
         return newsLiveData
         //Data manipulation example
         /*Mapper class from vievModel to presentation layer
@@ -79,31 +75,28 @@ class NewsViewModel:ViewModel(), KoinComponent{
         }
 
     fun update(){
-        CoroutineScope(Dispatchers.IO).launch {
+       CoroutineScope(Dispatchers.IO).launch {
             val getData = getNewsUseCase.execute()
             when(getData){
-                is Result.Success -> newsLiveData.postValue(getData.response) //eventuale mapper
+                is Result.Success -> newsLiveData.postValue(getData.response)
                 is Result.ConnectionError -> {
-                    Log.d(TAG,"connection error")
-                    _verificationError.postValue("connection error")
+                    _errorMutableData.postValue("connection error")
                 }
                 is Result.ServerError -> {
-                    Log.d(TAG,"server error")
-                    _verificationError.postValue("server error")
+                    _errorMutableData.postValue("server error")
                 }
                 is Result.Unauthorized -> {
-                    Log.d(TAG, "unauthorized")
-                    _verificationError.postValue( "unauthorized")
+                    _errorMutableData.postValue( "unauthorized")
                 }
             }
         }
     }
 
     fun getLayoutManagerByOrientation(context: Context):RecyclerView.LayoutManager{
-        if(context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
-            return LinearLayoutManager(context)
+        return if(context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            LinearLayoutManager(context)
         }else{
-            return GridLayoutManager(context,2)
+            GridLayoutManager(context,2)
         }
     }
 }

@@ -1,16 +1,14 @@
 package com.supercaliman.domain
 
 import com.supercaliman.domain.model.NewsArticle
-import com.supercaliman.domain.model.NewsResponse
 import com.supercaliman.domain.model.Result
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+
 
 /**
  * Rappresenta le operationi che posso eseguire sul mio oggetto newsResult, va fatta una classe per ogni operazione CRUD
  */
-class getNewsTaskUseCase(): KoinComponent {
-    val newsRepository: Repository by inject()
+class getNewsTaskUseCase(private  val newsRepository: Repository){
+
 
 
    suspend fun execute(): Result<List<NewsArticle>> {
