@@ -35,11 +35,6 @@ dependencies {
     //gson
     implementation "com.google.code.gson:gson:$gson_version"
 
-    //architecture component for viewModel
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$arch_version"
-
-    //koin DI
-    implementation "org.koin:koin-android:$koin_version"
 
 
 }

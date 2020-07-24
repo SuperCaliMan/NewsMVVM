@@ -1,7 +1,6 @@
 package com.supercaliman.data.cache
 
 import androidx.room.*
-import io.reactivex.Single
 
 @Dao
 interface CacheDAO {
