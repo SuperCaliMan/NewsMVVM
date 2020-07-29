@@ -41,7 +41,8 @@ class FirstFragment : Fragment() {
 
         viewModel.errorLiveData.observe(viewLifecycleOwner, Observer {renderErrorUI(view,it)})
 
-        floatingActionButton.setOnClickListener {viewModel.update()}
+
+        swiperefresh.setOnRefreshListener { viewModel.update() }
     }
 
     fun renderUi(response: List<NewsArticle>){
@@ -50,6 +51,7 @@ class FirstFragment : Fragment() {
         listViewNews.adapter = mAdapter
         snackbar?.dismiss()
         mAdapter.data = response
+        swiperefresh.isRefreshing = false;
 
     }
 
