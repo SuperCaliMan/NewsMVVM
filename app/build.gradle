@@ -19,6 +19,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
 
     buildTypes {
         release {
@@ -47,6 +50,8 @@ dependencies {
 
     //img lib
     implementation "com.squareup.picasso:picasso:$picasso_version"
+    implementation("io.coil-kt:coil:0.11.0")
+
 
 
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"

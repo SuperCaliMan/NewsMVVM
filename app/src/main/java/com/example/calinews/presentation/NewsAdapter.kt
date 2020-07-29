@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
+import coil.transform.CircleCropTransformation
 import com.example.calinews.R
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
@@ -49,12 +51,10 @@ class NewsAdapter():RecyclerView.Adapter<NewsAdapter.NewsArticleViewHolder>(){
         fun bind(article: NewsArticle, context: Context) {
             mTitleView.text = article.title
             mDetail.text = article.description
-            val builder = Picasso.Builder(context)
-            builder.downloader(OkHttp3Downloader(context))
-            builder.build().load(article.urlToImage)
-               // .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
-                .into(imgView)
+            imgView.load(article.urlToImage){
+                crossfade(true)
+                placeholder(R.drawable.ic_launcher_background)
+            }
         }
     }
 }

@@ -75,7 +75,7 @@ class NewsViewModel(var getNewsUseCase: getNewsTaskUseCase):ViewModel(){
         }
 
     fun update(){
-       CoroutineScope(Dispatchers.IO).launch {
+       viewModelScope.launch(Dispatchers.IO) {
             val getData = getNewsUseCase.execute()
             when(getData){
                 is Result.Success -> newsLiveData.postValue(getData.response)
