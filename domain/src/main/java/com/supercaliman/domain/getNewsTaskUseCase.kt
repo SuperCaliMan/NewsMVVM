@@ -7,7 +7,7 @@ import com.supercaliman.domain.model.Result
 /**
  * Rappresenta le operationi che posso eseguire sul mio oggetto newsResult, va fatta una classe per ogni operazione CRUD
  */
-class getNewsTaskUseCase(private  val newsRepository: Repository){
+class getNewsTaskUseCase(val newsRepository: Repository){
 
 
 

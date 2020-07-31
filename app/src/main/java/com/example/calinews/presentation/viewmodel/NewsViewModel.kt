@@ -1,42 +1,40 @@
 package com.example.calinews.presentation.viewmodel
 
 
-import SingleLiveEvent
+
+
 import android.content.Context
 import android.content.res.Configuration
-import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.supercaliman.domain.SingleLiveEvent
 import com.supercaliman.domain.getNewsTaskUseCase
 import com.supercaliman.domain.model.NewsArticle
 import com.supercaliman.domain.model.Result
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 /**
  * ViewModel to show a list of news, in landscapeMode list become a grid
  */
 @Suppress("UNCHECKED_CAST")
-class NewsViewModel(var getNewsUseCase: getNewsTaskUseCase):ViewModel(){
-    private val TAG:String = NewsViewModel::class.java.simpleName
+class NewsViewModel @ViewModelInject constructor(var getNewsUseCase: getNewsTaskUseCase):ViewModel(){
     private var _errorMutableData = SingleLiveEvent<String>()
     private var newsLiveData: MutableLiveData<List<NewsArticle>> = liveData(Dispatchers.IO) {
             val getData = getNewsUseCase.execute()
             when(getData){
                     is Result.Success -> emit(getData.response) //eventuale mapper
                     is Result.ConnectionError -> {
-                        Log.d(TAG,"connection error")
                         _errorMutableData.postValue("connection error")
                     }
                     is Result.ServerError -> {
-                        Log.d(TAG,"server error")
                         _errorMutableData.postValue("server error")
                     }
                     is Result.Unauthorized -> {
-                        Log.d(TAG, "unauthorized")
                         _errorMutableData.postValue( "unauthorized")
                     }
                 }

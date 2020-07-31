@@ -1,20 +1,11 @@
 package com.example.calinews.di
 
 import android.app.Application
-import com.example.calinews.di.appModule
-import com.supercaliman.data.dataModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class App: Application() {
     override fun onCreate() {
         super.onCreate()
-        startKoin {
-            androidLogger(Level.DEBUG)
-            androidContext(this@App)
-            modules(listOf(appModule,dataModule))
-        }
     }
 }

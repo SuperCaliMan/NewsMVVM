@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -64,11 +67,17 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$arch_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$arch_version"
 
-    //koin DI
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    implementation "org.koin:koin-androidx-fragment:$koin_version"
+
+    //hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_jetpack_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_jetpack_version"
+
+
+
+
+
 
 
     implementation project(':domain')

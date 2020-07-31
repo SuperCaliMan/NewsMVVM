@@ -22,7 +22,7 @@ abstract class CacheDatabase : RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         CacheDatabase::class.java,
-                        "prova_db"
+                        "cache_db"
                     ).build()
                 }
             }

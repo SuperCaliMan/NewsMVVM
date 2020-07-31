@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -38,11 +39,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //koin DI
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    implementation "org.koin:koin-androidx-fragment:$koin_version"
 
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -53,6 +49,9 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
 
+    //hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
 
 

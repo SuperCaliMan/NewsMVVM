@@ -29,7 +29,7 @@ class NewsRepositoryImpl(val newsApi: NewsApi, val cache:CacheDAO, val mapper:Ca
                Result.Success(cache.getCacheArticles().map { mapper.mapToModel(it) })
             }
             is NetworkResource.Error -> {
-                if (cache.isEmpty()) {
+                if (cache.containsData()) {
                     Result.Success(cache.getCacheArticles().map { mapper.mapToModel(it) })
                 } else {
                     val errorResponse = res.error
