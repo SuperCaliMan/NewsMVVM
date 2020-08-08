@@ -15,4 +15,7 @@ interface CacheDAO {
 
     @Query("SELECT CASE WHEN EXISTS(SELECT 1 FROM newsarticleentity) THEN 1 ELSE 0 END")
     fun containsData():Boolean
+
+    @Query("DELETE FROM newsarticleentity")
+    fun deleteAll()
 }

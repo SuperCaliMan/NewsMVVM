@@ -2,5 +2,4 @@ Activity/Fragment --> ViewModel --> UseCase/Entities/Models --> Repository --> A
 
 -----------| PRESENTATION |----------------| DOMAIN |--------------------| DATA |--------------------
 
-TODO:
-- creare un mock delle news per vedere l'alta testabilità della clean architecture
+

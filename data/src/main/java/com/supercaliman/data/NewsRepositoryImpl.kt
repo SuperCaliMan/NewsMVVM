@@ -25,6 +25,7 @@ class NewsRepositoryImpl(val newsApi: NewsApi, val cache:CacheDAO, val mapper:Ca
 
         return when(res){
             is NetworkResource.Success -> {
+               cache.deleteAll()
                res.data!!.articles!!.map { mapper.map(it) }.map { newsArticleEntity ->  cache.add(newsArticleEntity) }
                Result.Success(cache.getCacheArticles().map { mapper.mapToModel(it) })
             }
