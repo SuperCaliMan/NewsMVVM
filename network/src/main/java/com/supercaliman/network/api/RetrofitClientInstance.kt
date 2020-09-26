@@ -1,8 +1,11 @@
 package com.example.retrofit
 
 import com.supercaliman.network.NetworkConfiguration
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 /**
  * Alberto Caliman 21/05/2020
@@ -12,10 +15,18 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class RetrofitClientInstance(config: NetworkConfiguration) {
 
-        val URL:String = config.baseUrl()
+    var logging = HttpLoggingInterceptor()
+    var httpClient = OkHttpClient.Builder()
 
-        var retrofit:Retrofit = Retrofit.Builder()
+    init {
+        logging.level = HttpLoggingInterceptor.Level.HEADERS
+        httpClient.addInterceptor(logging)
+    }
+    val URL:String = config.baseUrl()
+
+    var retrofit:Retrofit = Retrofit.Builder()
             .baseUrl(URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(httpClient.build())
             .build()
 }

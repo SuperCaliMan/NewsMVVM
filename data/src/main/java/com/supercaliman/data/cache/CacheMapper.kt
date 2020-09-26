@@ -20,9 +20,9 @@ class CacheMapper @Inject constructor(){
             data.title,
             data.description,
             data.url,
-            data.urlToImage,
+            data.urlToImage?:"",
             data.publishedAt,
-            data.content
+            data.content ?:""
         )
 
     }

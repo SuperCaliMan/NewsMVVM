@@ -10,7 +10,7 @@ data class NewsArticleEntity(
     @ColumnInfo(name ="title") val title:String,
     @ColumnInfo(name ="description")val description:String,
     @PrimaryKey val url:String,
-    @ColumnInfo(name ="urlToImage") val urlToImage:String,
+    @ColumnInfo(name ="urlToImage") val urlToImage:String?,
     @ColumnInfo(name ="publishedAt") val publishedAt:String,
-    @ColumnInfo(name ="content")val content:String
+    @ColumnInfo(name ="content")val content:String?
 )

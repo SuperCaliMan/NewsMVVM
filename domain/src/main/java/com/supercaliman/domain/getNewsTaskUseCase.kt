@@ -7,10 +7,11 @@ import com.supercaliman.domain.model.Result
 /**
  * @author Alberto Caliman 31/07/2020
  */
-class getNewsTaskUseCase(val newsRepository: Repository){
+class getNewsTaskUseCase(val newsRepository: Repository) {
 
-   suspend fun execute(): Result<List<NewsArticle>> {
-        val news = newsRepository.getNews("google-news",BuildConfig.APIKEY)
+
+    suspend fun execute(): Result<List<NewsArticle>> {
+        val news = newsRepository.getNews("google-news")
         return news
     }
 }

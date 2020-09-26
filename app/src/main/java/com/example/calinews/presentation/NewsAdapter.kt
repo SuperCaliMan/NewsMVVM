@@ -37,7 +37,7 @@ class NewsAdapter():RecyclerView.Adapter<NewsAdapter.NewsArticleViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: NewsArticleViewHolder, position: Int) {
-        holder.bind(data[position],context)
+        holder.bind(data[position])
     }
 
     class NewsArticleViewHolder(inflater: LayoutInflater,parent: ViewGroup):
@@ -48,7 +48,7 @@ class NewsAdapter():RecyclerView.Adapter<NewsAdapter.NewsArticleViewHolder>(){
         var imgView: ImageView = itemView.findViewById(R.id.news_img)
 
 
-        fun bind(article: NewsArticle, context: Context) {
+        fun bind(article: NewsArticle) {
             mTitleView.text = article.title
             mDetail.text = article.description
             imgView.load(article.urlToImage){

@@ -74,11 +74,8 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_jetpack_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_jetpack_version"
 
-
-
-
-
-
+    //Paging
+    implementation 'androidx.paging:paging-runtime:2.1.2'
 
     implementation project(':domain')
     implementation project(':data')

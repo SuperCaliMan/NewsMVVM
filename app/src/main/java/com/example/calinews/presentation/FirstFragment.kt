@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.example.calinews.R
 import com.example.calinews.presentation.viewmodel.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -20,6 +21,7 @@ class FirstFragment : Fragment() {
     private val viewModel: NewsViewModel by viewModels()
     private lateinit var mAdapter: NewsAdapter
     private var snackbar: Snackbar? = null
+    private val pagedAdapater = NewsAdapterPage()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +40,17 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //observer
-        viewModel.getUiData().observe(viewLifecycleOwner, Observer { renderUi(it)})
+        //viewModel.getUiData().observe(viewLifecycleOwner, Observer { renderUi(it)})
+        listViewNews.layoutManager = viewModel.getLayoutManagerByOrientation(requireContext())
+        listViewNews.adapter = pagedAdapater
+
+        viewModel.newsPagedLiveData.observe(viewLifecycleOwner, Observer { renderUiPaged(it) })
 
         viewModel.errorLiveData.observe(viewLifecycleOwner, Observer {renderErrorUI(view,it)})
 
-
-        swiperefresh.setOnRefreshListener { viewModel.update() }
+        swiperefresh.setOnRefreshListener {
+           viewModel.refresh()
+        }
     }
 
     fun renderUi(response: List<NewsArticle>){
@@ -54,6 +61,10 @@ class FirstFragment : Fragment() {
         mAdapter.data = response
         swiperefresh.isRefreshing = false;
 
+    }
+
+    fun renderUiPaged(response:PagedList<NewsArticle>){
+        pagedAdapater.submitList(response)
     }
 
     fun renderErrorUI(view: View,errorMessage:String){
