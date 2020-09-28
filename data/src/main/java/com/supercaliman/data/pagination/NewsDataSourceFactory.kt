@@ -1,5 +1,6 @@
 package com.supercaliman.data.pagination
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.supercaliman.data.NewsRepositoryImpl
@@ -19,9 +20,10 @@ class NewsDataSourceFactory(private val repository: Repository,
 
 
     override fun create(): DataSource<Int, NewsArticle> {
-        newsDataSource = NewsDataSource(scope, repository)
-        this.source.postValue(newsDataSource)
-        return newsDataSource
+        val source  = NewsDataSource(scope, repository)
+        newsDataSource = source
+        this.source.postValue(source)
+        return source
     }
 
     fun invalidate(){

@@ -10,12 +10,6 @@ interface CacheDAO {
     @Query("SELECT * FROM newsarticleentity")
     fun getCacheArticles():List<NewsArticleEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addList(articles:List<NewsArticleEntity>)
-
-    @Query("SELECT * FROM newsarticleentity")
-    fun getPagingArticles():DataSource.Factory<Int,NewsArticleEntity>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE )
     fun add(articleDao: NewsArticleEntity)
 

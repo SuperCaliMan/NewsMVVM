@@ -20,7 +20,7 @@ class NewsDataSource(
 ): PageKeyedDataSource<Int, NewsArticle>() {
 
    private val _showLoading = MutableLiveData<Boolean>()
-   val showLoading:LiveData<Boolean>
+   val showLoading: LiveData<Boolean>
       get() = _showLoading
 
    override fun loadInitial(
@@ -29,10 +29,10 @@ class NewsDataSource(
    ) {
       _showLoading.postValue(true)
       scope.launch(Dispatchers.IO) {
-         val res = repo.getPagedNews(1,params.requestedLoadSize)
-         when(res){
+         val res = repo.getPagedNews(1, params.requestedLoadSize)
+         when (res) {
             is Result.Success -> {
-               callback.onResult(res.response!!,null,1)
+               callback.onResult(res.response!!, null, 1)
                _showLoading.postValue(false)
             }
          }
@@ -45,12 +45,12 @@ class NewsDataSource(
       callback: LoadCallback<Int, NewsArticle>
    ) {
       _showLoading.postValue(true)
-      val page = params.key-1
+      val page = params.key - 1
       scope.launch(Dispatchers.IO) {
-         val res = repo.getPagedNews(page,params.requestedLoadSize)
-         when(res){
+         val res = repo.getPagedNews(page, params.requestedLoadSize)
+         when (res) {
             is Result.Success -> {
-               callback.onResult(res.response!!,page)
+               callback.onResult(res.response!!, page)
                _showLoading.postValue(false)
             }
          }
@@ -59,20 +59,15 @@ class NewsDataSource(
 
    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, NewsArticle>) {
       _showLoading.postValue(true)
-      val page = params.key+1
+      val page = params.key + 1
       scope.launch(Dispatchers.IO) {
-         val res = repo.getPagedNews(page,params.requestedLoadSize)
-         when(res){
+         val res = repo.getPagedNews(page, params.requestedLoadSize)
+         when (res) {
             is Result.Success -> {
-               callback.onResult(res.response!!,page)
+               callback.onResult(res.response!!, page)
                _showLoading.postValue(false)
             }
          }
       }
-   }
-
-   override fun invalidate() {
-      super.invalidate()
-      scope.cancel()
    }
 }

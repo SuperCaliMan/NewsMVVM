@@ -1,23 +1,16 @@
 package com.supercaliman.data
 
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Transformations
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import com.supercaliman.data.cache.CacheDAO
 import com.supercaliman.data.cache.CacheMapper
 import com.supercaliman.data.network.NewsApi
 import com.supercaliman.data.network.NewsSafeApi
-import com.supercaliman.data.pagination.CacheBoundaryCallback
 import com.supercaliman.domain.BuildConfig.APIKEY
 import com.supercaliman.domain.Repository
 import com.supercaliman.domain.model.NewsArticle
 import com.supercaliman.domain.model.Result
 import com.supercaliman.network.api.NetworkError
 import com.supercaliman.network.api.NetworkResource
-import kotlinx.coroutines.CoroutineScope
 
 
 /**
@@ -68,30 +61,19 @@ class NewsRepositoryImpl(
 
         return when(res){
             is NetworkResource.Success -> {
-                //TODO add cache https://medium.com/@shashankmohabia/android-paging-efficient-way-to-populate-recycler-view-dynamically-31f39f35cdf9
-                //cache.deleteAll()
                 Result.Success(res.data!!.articles!!.toMutableList())
-                //res.data!!.articles!!.map { mapper.map(it) }!!.map { newsArticleEntity ->  cache.add(newsArticleEntity) }
-                //Result.Success(cache.getCacheArticles().map { mapper.mapToModel(it) }.toMutableList())
             }
             is NetworkResource.Error -> {
-                /*
-                if (cache.containsData()) {
-                    Result.Success(cache.getCacheArticles().map { mapper.mapToModel(it) }.toMutableList())
-                } else {
-
-                 */
-                    val errorResponse = res.error
-                    if (errorResponse is NetworkError.HttpError) {
-                        if (errorResponse.httpCode == 401) {
+                val errorResponse = res.error
+                if (errorResponse is NetworkError.HttpError) {
+                    if (errorResponse.httpCode == 401) {
                             Result.Unauthorized
                         } else {
                             Result.ServerError
                         }
-                    } else {
-                        Result.ConnectionError
-                    }
-                //}
+                } else {
+                    Result.ConnectionError
+                }
             }
         }
     }
