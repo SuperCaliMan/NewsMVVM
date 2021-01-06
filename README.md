@@ -1,14 +1,3 @@
-
-
-<div align="center">
-  <p align="center">
-  <img src="screen/video.gif">
-    </p>
- </div>
-<br>
-
-
-
 Build 🛠
 -------------------
 
