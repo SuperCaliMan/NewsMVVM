@@ -7,12 +7,7 @@
  </div>
 <br>
 
-<p align="center">Notes application is sample app based on MVVM architecture.</p>
 
-
-Work in progress 🚧
--------------------
-The main purpose of this app is to show MVVM sample implementation 
 
 Build 🛠
 -------------------
@@ -21,6 +16,7 @@ What i used:
 
  - Retrofit
  - Paginantion
+ - Shimmer
  - Hilt
  - Coroutine
  - Gson
