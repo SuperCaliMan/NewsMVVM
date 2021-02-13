@@ -4,7 +4,7 @@ Build 🛠
 What i used:
 
  - Retrofit
- - Paginantion
+ - Pagination
  - Shimmer
  - Hilt
  - Coroutine
