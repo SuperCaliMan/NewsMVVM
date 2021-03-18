@@ -73,10 +73,10 @@ class NewsViewModel @ViewModelInject constructor(var getNewsUseCase: getNewsTask
         }
 
     fun update(){
-       viewModelScope.launch(Dispatchers.IO) {
+       viewModelScope.launch() {
             val getData = getNewsUseCase.execute()
             when(getData){
-                is Result.Success -> newsLiveData.postValue(getData.response)
+                is Result.Success -> newsLiveData.value = getData.response
                 is Result.ConnectionError -> {
                     _errorMutableData.postValue("connection error")
                 }
